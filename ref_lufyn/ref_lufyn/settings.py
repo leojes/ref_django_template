@@ -155,15 +155,12 @@ class BaseConfiguration(Configuration):
     # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
     STATIC_URL = '/static/'
+    
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static'),
+    ]
 
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    # if DEBUG:
-    #     STATICFILES_DIRS = [
-    #         os.path.join(BASE_DIR, 'static'),
-    #     ]
-    # else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
     # Media files
     MEDIA_URL = '/media/'
@@ -197,8 +194,10 @@ class BaseConfiguration(Configuration):
     def __init__(self):
         super(BaseConfiguration).__init__()
 
+
 class Development(BaseConfiguration):
     pass
+
 
 class Production(BaseConfiguration):
     DEBUG = False
@@ -215,7 +214,11 @@ class Production(BaseConfiguration):
     #     send_default_pii=True
     # )
 
-    # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
     # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+    #Static files handling
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
